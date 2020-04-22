@@ -25,7 +25,7 @@ namespace RPS_Game
             while (true)
             {
                 round++; //increase the round by 1
-
+                //0 = rock, 1 = paper, 2 = scissor
                 //randomly chooses rock paper or scissors for each player
                 int p1rand = rand.Next(3);
                 int p2rand = rand.Next(3);
@@ -62,7 +62,7 @@ namespace RPS_Game
                 {
                     results += player1 + " and " + player2 + " ties.";
                 }
-                else if (win == 1 || win == 3) // player1 wins
+                else if (win == 0|| win == 3) // player1 wins
                 {
                     results += player1 + " wins.";
                 }
