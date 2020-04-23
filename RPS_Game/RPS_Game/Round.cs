@@ -10,6 +10,8 @@ namespace RPS_Game
         public string p2Choice { get; set; }
         public Player Winner { get ; set; }
 
+        // Input parameter of string consisting of Rock, Paper or Scissors and will return
+        // an int accordingly, will return Scissors for invalid strings to avoid exceptions
         private int getChoice(string choice) {
             if (choice == "Rock") return 0;
             else if (choice == "Paper") return 1;
@@ -17,19 +19,28 @@ namespace RPS_Game
             
         }
 
+        // No input parameter is required, returns  true if there is a Winner set
         public bool isWinner() {
             return !(Winner == null);
         }
 
+        // Requires input parameter of two player objects, which will then record the
+        // choice of Rock, Paper, or Scissors accordingly.
         public void play(Player p1, Player p2) {
             p1Choice = p1.choosePlay();
             p2Choice = p2.choosePlay();
         }
+
+        // Requires input parameter of two player objects, these are used
+        // to increment their win count accordingly
         public void findWinner(Player p1, Player p2) {
+            // win is used for switch statement and find out which player won
             int win = getChoice(p1Choice) - getChoice(p2Choice) + 2;
-            if (win == 0 || win == 3) Winner = p1;
-            else if (win == 1 || win == 4) Winner = p2;
-            else Winner = null;
+
+            if (win == 0 || win == 3) Winner = p1; // winner is set to p1 when win is 0 or 3
+            else if (win == 1 || win == 4) Winner = p2; // winner set to p2 when win is 1 or 4
+            else Winner = null; // null if tie
+
             switch (win)
             { //win is mostly unique varying with what each player picks
                 case 0: //p1 rock p2 scissor p1 wins

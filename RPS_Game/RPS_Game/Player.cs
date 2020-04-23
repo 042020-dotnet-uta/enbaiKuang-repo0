@@ -22,11 +22,13 @@ namespace RPS_Game
 			set { name = value; }
 		}
 
+		// No input parameters required, returns String value of either Rock, Paper
+		// or Scissors randomly
 		public string choosePlay()
 		{
 			Random rand = new Random(); // instansiates the Random Class
-			int choice = rand.Next(3);
-			switch(choice){
+			int choice = rand.Next(3); // generates random nubmer of 0, 1 or 2
+			switch(choice){ // returns Rock, Paper, or Scissors according to input random number
 				case 0:
 					return "Rock";
 				case 1:
@@ -36,6 +38,5 @@ namespace RPS_Game
 			}
 			return "";
 		}
-
 	}
 }
