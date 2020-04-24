@@ -41,6 +41,27 @@ namespace RPS_Game
             }
         }
 
+        public void playGame()
+        {
+            Player1 = new Player(); // creates player 1 and two
+            Player2 = new Player();
+
+            while (true)
+            {  // while loop keeps game going until there is a winner
+                Round newRound = new Round(); // starts new round
+                newRound.play(Player1, Player2); //play round and generate choices for both players
+                newRound.findWinner(Player1, Player2); // finds and records winner for current round
+                addRound(newRound); //add current round to List for storage
+                // conditions check to see if a player has won,checks if p1 or p2 has more than 2 wins.
+                if (Player1.winAccess > 1 || Player2.winAccess > 1)
+                {
+                    print(); // print record of each round
+                    findWinner(); // find and print the winner
+                    return; //ends program
+                }
+            }
+        }
+
         public void addRound(Round newRound) {
             round.Add(newRound); //adds the input round into the list of Round objects
         }
