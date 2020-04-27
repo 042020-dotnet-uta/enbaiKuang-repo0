@@ -1,23 +1,21 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace RPS_Game
 {
-    class Game
+    public class Game
     {
-        public Game() { // instantiatiate the round List
+        private readonly ILogger _logger;
+        public Game(ILogger<Game> logger) { 
             round = new List<Round>();
+            _logger = logger;
         }
-        private List<Round> round;
+        private List<Round> round = new List<Round>();// instantiatiate the round List
 
-        public List<Round> Round
-        {
-            get { return round; }
-            set { round = value; }
-        }
-
-        private Player player1;
+        public Player player1;
 
         public Player Player1
         {
@@ -43,27 +41,32 @@ namespace RPS_Game
 
         public void playGame()
         {
+            _logger.LogInformation("Start game and adds new players");
             Player1 = new Player(); // creates player 1 and two
             Player2 = new Player();
+            //var services = new ServiceCollection();
+            //ConfigureServices(services);
 
             while (true)
             {  // while loop keeps game going until there is a winner
-                Round newRound = new Round(); // starts new round
-                newRound.play(Player1, Player2); //play round and generate choices for both players
-                newRound.findWinner(Player1, Player2); // finds and records winner for current round
-                addRound(newRound); //add current round to List for storage
-                // conditions check to see if a player has won,checks if p1 or p2 has more than 2 wins.
-                if (Player1.winAccess > 1 || Player2.winAccess > 1)
+                var services = new ServiceCollection();
+                ConfigureServices(services);
+
+                using (ServiceProvider serviceProvider = services.BuildServiceProvider()){
+                    Round newRound = serviceProvider.GetService<Round>(); // creates new Game
+                    newRound.play(Player1, Player2); //play round and generate choices for both players
+                    newRound.findWinner(Player1, Player2); // finds and records winner for current round
+                    round.Add(newRound); //add current round to List for storage
+                 }
+
+              // conditions check to see if a player has won,checks if p1 or p2 has more than 2 wins.
+            if (Player1.winAccess > 1 || Player2.winAccess > 1)
                 {
                     print(); // print record of each round
                     findWinner(); // find and print the winner
                     return; //ends program
                 }
             }
-        }
-
-        public void addRound(Round newRound) {
-            round.Add(newRound); //adds the input round into the list of Round objects
         }
 
         //No input parameters, used to print all rounds within the List of rounds
@@ -99,5 +102,12 @@ namespace RPS_Game
                     $"{Player1.winAccess } with {ties} ties.");
             }
         }
+
+        private static void ConfigureServices(ServiceCollection services)
+        {
+            services.AddLogging(configure => configure.AddConsole())
+                .AddTransient<Round>();
+        }
     }
 }
+

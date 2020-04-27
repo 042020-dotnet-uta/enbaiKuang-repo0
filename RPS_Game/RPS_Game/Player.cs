@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RPS_Game
 {
-    class Player
+    public class Player
     {
 		private string name;
 		private int wins;
