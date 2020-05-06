@@ -19,12 +19,5 @@ namespace Project0.Models
             get { return location; }
             set { location = value; }
         }
-
-        private ICollection<Product> products;
-        public ICollection<Product> Products
-        {
-            get { return products; }
-            set { products = value; }
-        }
     }
 }

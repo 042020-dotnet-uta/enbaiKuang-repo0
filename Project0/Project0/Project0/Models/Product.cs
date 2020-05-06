@@ -48,12 +48,5 @@ namespace Project0.Models
             get { return price; }
             set { price = value; }
         }
-
-        private ICollection<Order> orders;
-        public ICollection<Order> Orders
-        {
-            get { return orders; }
-            set { orders = value; }
-        }
     }
 }
