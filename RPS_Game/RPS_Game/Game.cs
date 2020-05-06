@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,11 +6,10 @@ namespace RPS_Game
 {
     public class Game
     {
-        private readonly ILogger _logger;
-        public Game(ILogger<Game> logger) { 
+        public Game() { 
             round = new List<Round>();
-            _logger = logger;
         }
+        public int GameId { set; get; }
         private List<Round> round = new List<Round>();// instantiatiate the round List
 
         public Player player1;
@@ -41,7 +38,6 @@ namespace RPS_Game
 
         public void playGame()
         {
-            _logger.LogInformation("Start game and adds new players");
             Player1 = new Player(); // creates player 1 and two
             Player2 = new Player();
             //var services = new ServiceCollection();
@@ -49,15 +45,12 @@ namespace RPS_Game
 
             while (true)
             {  // while loop keeps game going until there is a winner
-                var services = new ServiceCollection();
-                ConfigureServices(services);
 
-                using (ServiceProvider serviceProvider = services.BuildServiceProvider()){
-                    Round newRound = serviceProvider.GetService<Round>(); // creates new Game
-                    newRound.play(Player1, Player2); //play round and generate choices for both players
-                    newRound.findWinner(Player1, Player2); // finds and records winner for current round
-                    round.Add(newRound); //add current round to List for storage
-                 }
+                Round newRound = new Round(); // creates new Game
+                newRound.play(Player1, Player2); //play round and generate choices for both players
+                newRound.findWinner(Player1, Player2); // finds and records winner for current round
+                round.Add(newRound); //add current round to List for storage
+
 
               // conditions check to see if a player has won,checks if p1 or p2 has more than 2 wins.
             if (Player1.winAccess > 1 || Player2.winAccess > 1)
@@ -101,12 +94,6 @@ namespace RPS_Game
                 Console.WriteLine($"{Player2.nameAccess} Wins {Player2.winAccess} - " +
                     $"{Player1.winAccess } with {ties} ties.");
             }
-        }
-
-        private static void ConfigureServices(ServiceCollection services)
-        {
-            services.AddLogging(configure => configure.AddConsole())
-                .AddTransient<Round>();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace RPS_Game
     {
 		private string name;
 		private int wins;
-
+		public int playerID { set; get; }
 		public int winAccess
 		{
 			get { return wins; }
