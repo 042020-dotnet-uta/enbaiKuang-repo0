@@ -21,15 +21,15 @@ stages:
     jobs: 
       - job: 'build'
         steps:
-          - script: "dotnet --project 'Project0/Project0/Project0/Project0.csproj' build"
+          - script: "dotnet 'Project0/Project0/Project0/Project0.csproj' build"
           - script: echo "oh hey $(Enbai Kuang)"
       - job: 'test'
         dependsOn: 'build'
         steps:
-          - script: "dotnet --project 'Project0/Project0/Project0/Project0.csproj' test"
+          - script: "dotnet 'Project0/Project0/Project0/Project0.csproj' test"
       - job: 'publish'
         dependsOn: 'test'
         steps:
-          - script: "dotnet --project 'Project0/Project0/Project0/Project0.csproj' publish"
+          - script: "dotnet 'Project0/Project0/Project0/Project0.csproj' publish"
 
 name: '$(date:yyyMMdd)$(rev:r)'
