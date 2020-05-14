@@ -1,0 +1,35 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - 'master'
+
+pool:
+  vmImage: ubuntu-latest
+
+#name a variable
+variables:
+- name: 'Enbai Kuang'
+  value: 'me'
+pr: 'none'
+
+#groups sequential actions
+stages:
+  - stage:
+    jobs: 
+      - job: 'build'
+        steps:
+          - script: "dotnet 'Project0/Project0/Project0/Project0.csproj' build"
+          - script: echo "oh hey $(Enbai Kuang)"
+      - job: 'test'
+        dependsOn: 'build'
+        steps:
+          - script: "dotnet 'Project0/Project0/Project0/Project0.csproj' test"
+      - job: 'publish'
+        dependsOn: 'test'
+        steps:
+          - script: "dotnet 'Project0/Project0/Project0/Project0.csproj' publish"
+
+name: '$(date:yyyMMdd)$(rev:r)'
