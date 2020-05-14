@@ -4,10 +4,10 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+  - 'master'
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
 #name a variable
 variables:
@@ -21,15 +21,15 @@ stages:
     jobs: 
       - job: 'build'
         steps:
-          - script: 'dotnet build'
+          - script: "dotnet --project 'Project0/Project0/Project0/Project0.csproj' build"
           - script: echo "oh hey $(Enbai Kuang)"
       - job: 'test'
         dependsOn: 'build'
         steps:
-          - script: 'dotnet test'
+          - script: "dotnet --project 'Project0/Project0/Project0/Project0.csproj' test"
       - job: 'publish'
         dependsOn: 'test'
         steps:
-          - script: 'dotnet publish'
+          - script: "dotnet --project 'Project0/Project0/Project0/Project0.csproj' publish"
 
 name: '$(date:yyyMMdd)$(rev:r)'
